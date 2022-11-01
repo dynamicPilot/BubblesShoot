@@ -1,0 +1,76 @@
+{
+    "name": "Controlls",
+    "maps": [
+        {
+            "name": "PlayerActions",
+            "id": "f6c133a2-5951-4f5e-a1db-cf64d743b9f8",
+            "actions": [
+                {
+                    "name": "PositionAction",
+                    "type": "Value",
+                    "id": "0f01df02-9ca6-4866-939c-44fe1a441c47",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ContactAction",
+                    "type": "Button",
+                    "id": "28403f4f-db69-4d53-8bdc-466d721e094a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c0e5d242-9f10-4f34-9cf6-c02b6448f0bc",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PositionAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa55d17b-abbe-4f49-a61d-022aa4df89ba",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PositionAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e62f3f4-b021-49ca-a4ed-d49155d9a6e6",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ContactAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2353f800-a3ad-4dec-8fd7-dfe1063708bf",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ContactAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
