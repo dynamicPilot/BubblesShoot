@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - StartPlace
   - SceneData
+  - DataContainer
   layers:
   - Default
   - TransparentFX

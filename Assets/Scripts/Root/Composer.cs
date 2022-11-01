@@ -4,6 +4,7 @@ using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Grids;
 using BubblesShoot.Model.Interfaces;
 using BubblesShoot.ModelControllers;
+using BubblesShoot.Root.Interfaces;
 using BubblesShoot.View;
 using BubblesShoot.View.Common;
 using BubblesShoot.View.Creators;
@@ -17,7 +18,7 @@ using UnityEngine;
 
 namespace BubblesShoot.Root
 {
-    public class Composer
+    public class Composer : IComposer
     {
         private readonly SceneData _sceneData;
         private readonly StaticData _staticData;

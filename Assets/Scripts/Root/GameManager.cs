@@ -4,9 +4,9 @@ using BubblesShoot.Root;
 using BubblesShoot.View.Common;
 using System.Collections;
 
-namespace BubblesShoot
+namespace BubblesShoot.Root.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Manager
     {
         [SerializeField] private SceneData _sceneData;
 
@@ -15,12 +15,7 @@ namespace BubblesShoot
             SetSystems();
         }
 
-        private void SetSystems()
-        {
-            StartCoroutine(GettingReady());
-        }
-
-        IEnumerator GettingReady()
+        public override IEnumerator GettingReady()
         {
             var composer = new Composer(_sceneData);
             composer.MakeSystems();
@@ -30,11 +25,5 @@ namespace BubblesShoot
                 yield return null;
             StartGame(composer.GetIStartGame());
         }
-
-        private void StartGame(IStartGame controller)
-        {
-            controller.StartGame();
-        }
-
     }
 }
