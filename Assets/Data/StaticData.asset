@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f8de428ddab0844beb02495b1532bc, type: 3}
   m_Name: StaticData
   m_EditorClassIdentifier: 
-  RedColor: {r: 0.5294118, g: 0, b: 0.14124198, a: 1}
-  BlueColor: {r: 0, g: 0.39913678, b: 0.9150943, a: 1}
-  YellowColor: {r: 1, g: 0.916018, b: 0.24905658, a: 1}
-  GreenColor: {r: 0, g: 0.5188679, b: 0.15107214, a: 1}
+  RedColor: {r: 0.70980394, g: 0.05882353, b: 0.24313726, a: 1}
+  BlueColor: {r: 0.40784314, g: 0.39607844, b: 0.5568628, a: 1}
+  YellowColor: {r: 0.9764706, g: 0.654902, b: 0.015686275, a: 1}
+  GreenColor: {r: 0.011764706, g: 0.5254902, b: 0.4627451, a: 1}
+  EmptyRows: 1

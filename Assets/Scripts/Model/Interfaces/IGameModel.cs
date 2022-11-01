@@ -15,5 +15,7 @@ namespace BubblesShoot.Model.Interfaces
         void UpdateModel();
 
         bool CheckForEndGame();
+
+        void QuitGame();
     }
 }

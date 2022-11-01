@@ -10,6 +10,7 @@ using BubblesShoot.View.Creators;
 using BubblesShoot.View.Factories;
 using BubblesShoot.View.GuideSystem;
 using BubblesShoot.View.Interfaces;
+using BubblesShoot.View.StateControls;
 using BubblesShoot.View.Updaters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace BubblesShoot.Root
             _iStartGame = null;
             int emptyRow = _staticData.EmptyRows;
 
-            CoordinateGrid grid = GridConstructor.GetGrid(1, 10, _sceneData.BubbleSize, emptyRow);
+            CoordinateGrid grid = GridConstructor.GetGrid(5, 10, _sceneData.BubbleSize, emptyRow);
             List<List<BubbleCell>> bubbles = BubblesConstructor.GetRandomBubbles(grid, emptyRow);
 
             // game model
@@ -67,14 +68,24 @@ namespace BubblesShoot.Root
             // bubbles objects
             var objects = viewCreator.CreateBubbles(grid, bubbles);
 
+            var sceneUpdater = new SceneUpdater(cameraUpdater,
+                new ViewUpdater(objects), new UIUpdater(_sceneData.ScoreUI));
+
+            var startEndControl = new SceneStartEndControl(_sceneData.Cover, _sceneData.PauseUIControl);
+            var inputState = new InputStateControl(_sceneData.InputControl);
             //scene view
-            var sceneView = new SceneView(model,
-                new BubbleRoutine(_sceneData.PathContainer, bubbleCreator),
-                new ViewUpdater(objects),
-                _sceneData.InputControl, cameraUpdater);
+            var sceneView = new SceneView(new BubbleRoutine(_sceneData.PathContainer, bubbleCreator, _staticData.BubbleSpeed),
+                sceneUpdater, startEndControl,
+                inputState);
 
             // controller
             Controller controller = new Controller(model, sceneView);
+
+            var pauseState = new PauseStateControl(controller, 
+                new SceneLoader(_staticData.MenuIndex),
+                inputState);
+
+            _sceneData.PauseUIControl.StateControl = pauseState;
 
             var creators = GetCreators(startPoint, cameraSize, controller);
             

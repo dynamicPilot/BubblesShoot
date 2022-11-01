@@ -13,6 +13,8 @@ namespace BubblesShoot.View.Common
 
         [Header("Others")]
         public int EmptyRows = 1;
+        public int MenuIndex = 0;
+        public float BubbleSpeed = 2;
 
     }
 }

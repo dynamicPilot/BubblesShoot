@@ -2,6 +2,7 @@ using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Interfaces;
 using BubblesShoot.View.GuideSystem;
 using BubblesShoot.View.Interfaces;
+using BubblesShoot.View.StateControls;
 using BubblesShoot.View.Updaters;
 using System;
 using System.Collections.Generic;
@@ -11,25 +12,24 @@ namespace BubblesShoot.View
 {
     public class SceneView : IBubblesObserver, ISceneView
     {
-        private readonly IBubblesObservable _observable;
         private readonly BubbleRoutine _bubbleRoutine;
-        private readonly ViewUpdater _viewUpdater;
-        private readonly MonoBehaviour _inputControl;
-        private readonly CameraUpdater _cameraUpdater;
+        private readonly SceneStartEndControl _stateControl;
+        private readonly SceneUpdater _sceneUpdater;
+        private readonly IRaycastControl _raycastControl;
+        
 
-        public SceneView(IBubblesObservable observable, BubbleRoutine bubbleRoutine, ViewUpdater viewUpdater, 
-            MonoBehaviour inputControl, CameraUpdater cameraUpdater)
+        public SceneView(BubbleRoutine bubbleRoutine, SceneUpdater sceneUpdater,
+            SceneStartEndControl stateControl, IRaycastControl raycastControl)
         {
-            _observable = observable;
             _bubbleRoutine = bubbleRoutine;
-            _viewUpdater = viewUpdater;
-            _inputControl = inputControl;
-            _cameraUpdater = cameraUpdater;
+            _sceneUpdater = sceneUpdater;
+            _stateControl = stateControl;
+            _raycastControl = raycastControl;
         }
 
-        public void UpdateView(List<List<BubbleCell>> bubbles, float score)
+        public void UpdateView(List<List<BubbleCell>> bubbles, int score)
         {
-            _cameraUpdater.UpdateCameraPosition(_viewUpdater.UpdateView(bubbles));
+            _sceneUpdater.UpdateView(bubbles, score);
             ContinuePlaying();
         }
 
@@ -41,17 +41,34 @@ namespace BubblesShoot.View
 
         public void RegisterNewBubbleObject(GameObject bubbleObject, Tuple<int, int> indexes)
         {
-            _viewUpdater.RegisterNewBubbleObject(bubbleObject, indexes);
+            _sceneUpdater.RegisterNewBubbleObject(bubbleObject, indexes);
         }
 
         public void BlockRaycast()
         {
-            _inputControl.enabled = false;
+            _raycastControl.BlockRaycast();
         }
 
         public void ContinuePlaying()
         {
-            _inputControl.enabled = true;
+            _raycastControl.ContinueRaycast();
+        }
+
+        public void StartGame()
+        {
+            _stateControl.StartGame();
+            ContinuePlaying();
+        }
+
+        public void EndGame()
+        {
+            _stateControl.EndGame();
+            BlockRaycast();
+        }
+
+        public void QuitGame(bool restart)
+        {
+            _bubbleRoutine.QuitGame();
         }
     }
 }

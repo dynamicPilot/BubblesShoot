@@ -8,7 +8,7 @@ namespace BubblesShoot.View.GuideSystem
     {
         private Rigidbody2D _rb;
         private Vector2[] _path;
-        private float _positionDelta = 0.01f;
+        private float _positionDelta = 0.1f;
         private float _speed = 1.5f;
         private IBubbleOnPlaceInformer _informer;
         private Bubble _bubble;
@@ -39,7 +39,7 @@ namespace BubblesShoot.View.GuideSystem
 
             _currentTarget = _path[_pathIndex];
             Vector2 velocity = (_currentTarget - _rb.position).normalized;
-            _rb.velocity = velocity;
+            _rb.velocity = velocity * _speed;
             _pauseUpdate = false;
         }
 

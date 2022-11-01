@@ -7,6 +7,9 @@ namespace BubblesShoot.View.Interfaces
 {
     public interface ISceneView
     {
+        void StartGame();
+        void EndGame();
+        void QuitGame(bool restart);
         void SpawnNewBubble(Bubble bubble, IBubbleOnPlaceInformer informer);
         void RegisterNewBubbleObject(GameObject bubbleObject, Tuple<int, int> indexes);
         void BlockRaycast();

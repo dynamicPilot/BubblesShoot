@@ -5,7 +5,7 @@ namespace BubblesShoot.Model.Interfaces
 {
     public interface IBubblesObserver
     {
-        void UpdateView(List<List<BubbleCell>> bubbles, float score);
+        void UpdateView(List<List<BubbleCell>> bubbles, int score);
     }
 
     public interface IBubblesObservable

@@ -1,6 +1,8 @@
 using BubblesShoot.View.Factories;
 using BubblesShoot.View.Input;
 using BubblesShoot.View.PathSystem;
+using BubblesShoot.View.StateControls;
+using BubblesShoot.View.UI;
 using UnityEngine;
 
 namespace BubblesShoot.View.Common
@@ -27,6 +29,11 @@ namespace BubblesShoot.View.Common
         [Header("Factories")]
         public Factory LocalFactory;
         public Factory GlobalFactory;
+
+        [Header("UI")]
+        public ScoreUI ScoreUI;
+        public PauseMenuUIControl PauseUIControl;
+        public GameObject Cover;
 
         [Header("Others")]
         public PathContainer PathContainer;

@@ -2,6 +2,7 @@ using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Interfaces;
 using BubblesShoot.View.Creators;
 using BubblesShoot.View.PathSystem;
+using System;
 using UnityEngine;
 
 namespace BubblesShoot.View.GuideSystem
@@ -14,11 +15,15 @@ namespace BubblesShoot.View.GuideSystem
 
         private GameObject _newBubbleObject;
         private Bubble _newBubble;
+        private bool _isSubscribe = false;
+        private readonly float _bubbleSpeed;
 
-        public BubbleRoutine(PathContainer container, BubbleCreator creator)
+        public BubbleRoutine(PathContainer container, BubbleCreator creator, float bubbleSpeed)
         {
             _container = container;
-            _creator = creator;            
+            _creator = creator;
+            _isSubscribe = false;
+            _bubbleSpeed = bubbleSpeed;
         }
 
         public void SpawnNewBubble(Bubble bubble, IBubbleOnPlaceInformer informer)
@@ -27,6 +32,7 @@ namespace BubblesShoot.View.GuideSystem
             _newBubble = bubble;
             _informer = informer;
             _container.OnPathReady += StartBubble;
+            _isSubscribe = true;
         }
 
         public void StartBubble(Vector2[] path)
@@ -35,8 +41,15 @@ namespace BubblesShoot.View.GuideSystem
 
             _informer.BlockRaycast();
             _container.OnPathReady -= StartBubble;
+            _isSubscribe = false;
             var guide = _newBubbleObject.AddComponent<BubbleGuide>();
-            guide.StartBubble(path, _newBubble, _informer);
+            guide.StartBubble(path, _newBubble, _informer, _bubbleSpeed);
+        }
+
+        public void QuitGame()
+        {
+            if (_isSubscribe) _container.OnPathReady -= StartBubble;
+            _isSubscribe = false;
         }
     }
 }

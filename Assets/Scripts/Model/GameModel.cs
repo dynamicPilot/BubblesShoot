@@ -12,13 +12,14 @@ namespace BubblesShoot.Model
         private BubblesControl _bubblesControl;
         private GridControl _gridControl;
         private List<IBubblesObserver> _observers;
-        private int _score = 0;
+        private int _score;
         private bool _needUpdateObservers = false;
         public GameModel(BubblesControl bubbles, GridControl grid)
         {
             _bubblesControl = bubbles;
             _gridControl = grid;
             _observers = new List<IBubblesObserver>();
+            _score = 0;
         }
 
         public Tuple<Vector2, bool> GetPosition(Vector2 hitPoint)
@@ -30,9 +31,9 @@ namespace BubblesShoot.Model
         {
             Tuple<int, int> indexes = _gridControl.GetIndexes(position);
             var result =_bubblesControl.RegisterNewBubble(indexes, bubble);
-            Debug.Log("Score " + result.Item1);
+            
             _score += result.Item1;
-
+            Debug.Log("Score " + _score);
             _needUpdateObservers = result.Item2;
             if (_needUpdateObservers) _bubblesControl.AddRowToBubbles(_gridControl.AddRow());
             return indexes;            
@@ -73,6 +74,11 @@ namespace BubblesShoot.Model
         public Bubble GetNewBubble()
         {
             return _bubblesControl.GetNewBubble();
+        }
+
+        public void QuitGame()
+        {
+            _observers.Clear();
         }
     }
 }

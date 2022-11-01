@@ -29,7 +29,7 @@ namespace BubblesShoot.Model.Bubbles
                     if (colorIndex > 3) rowList.Add(new BubbleCell(null, grid.GetNearestCells(i, j)));
                     else
                     {
-                        rowList.Add(new BubbleCell(new Bubble((COLOR)0), grid.GetNearestCells(i, j)));
+                        rowList.Add(new BubbleCell(new Bubble((COLOR)colorIndex), grid.GetNearestCells(i, j)));
                         hasAtLeastOneBubble = true;
                     }
                 }
