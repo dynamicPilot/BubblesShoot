@@ -19,6 +19,7 @@ namespace BubblesShoot.View.PathSystem
 
         private RaycastHit2D _hit;
         private Ray2D _ray;
+        private LayerMask _layerMask;
 
         private float _bubbleSize;
 
@@ -34,6 +35,8 @@ namespace BubblesShoot.View.PathSystem
             if (pathContainer == null) Debug.LogError("PathDetection : No PathContainer Object");
             _users.Add(pathContainer);
             _inputControl = pathContainer.GetComponent<IStartStopPress>();
+
+            _layerMask = LayerMask.GetMask("Bubbles&Walls");
         }
         private void Start()
         {
@@ -83,7 +86,7 @@ namespace BubblesShoot.View.PathSystem
             {
                 _ray = new Ray2D(origin, direction);
                 //_hit = Physics2D.Raycast(_ray.origin, _ray.direction, lengthRemain);
-                _hit = Physics2D.CircleCast(_ray.origin, _bubbleSize / 2, _ray.direction,lengthRemain);
+                _hit = Physics2D.CircleCast(_ray.origin, _bubbleSize / 2, _ray.direction,lengthRemain, _layerMask);
 
                 if (_hit.collider)
                 {

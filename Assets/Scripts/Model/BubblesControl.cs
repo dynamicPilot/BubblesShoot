@@ -5,7 +5,6 @@ using BubblesShoot.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace BubblesShoot.Model
 {
@@ -24,8 +23,6 @@ namespace BubblesShoot.Model
         public Bubble GetNewBubble()
         {
             return _bubbleGenerator.GenerateNewBubble();
-            //int colorIndex = Random.Range(0, 4);
-            //return new Bubble((COLOR)colorIndex);
         }
 
         public Tuple<int, bool> RegisterNewBubble(Tuple<int,int> indexes, Bubble bubble)
@@ -61,7 +58,7 @@ namespace BubblesShoot.Model
         public void AddRowToBubbles(CoordinateGrid grid)
         {
             BubblesConstructor.AddRowToBubble(grid, Bubbles);
-            Debug.Log("Add row to Bubbles" + Bubbles.Count);
+            //Debug.Log("Add row to Bubbles" + Bubbles.Count);
         }
     }
 }

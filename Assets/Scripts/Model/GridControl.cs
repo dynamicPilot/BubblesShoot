@@ -1,4 +1,3 @@
-using BubblesShoot.Model.Bubbles;
 using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Grids;
 using System;
@@ -44,7 +43,7 @@ namespace BubblesShoot.Model
 
             if (delta <= 0.01f)
             {
-                Debug.Log($"Use cache indexes {_cacheIndexes.Item1} {_cacheIndexes.Item2}");
+                //Debug.Log($"Use cache indexes {_cacheIndexes.Item1} {_cacheIndexes.Item2}");
                 return _cacheIndexes;
             }
             else return GridSearcher.CalculateIndexesWithPosition(position, _grid);
@@ -53,7 +52,6 @@ namespace BubblesShoot.Model
         public CoordinateGrid AddRow()
         {
             _grid.AddRow(GridConstructor.GetRowForGrid(_grid));
-            //GridConstructor.Printer(_grid);
             return _grid;
         }
     }

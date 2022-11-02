@@ -16,7 +16,19 @@ namespace BubblesShoot.View.Factories
             // set color
             SpriteRenderer renderer = bubbleObject.GetComponent<SpriteRenderer>();
             if (renderer != null) renderer.color = _scheme.GetColor(color);
-            bubbleObject.GetComponent<CircleCollider2D>().enabled = false;
+        }
+    }
+
+    public class FreeBubbleSetup : BubbleSetup
+    {
+        public FreeBubbleSetup(ColorScheme scheme) : base(scheme)
+        {
+        }
+
+        public override void SetupBubble(GameObject bubbleObject, COLOR color)
+        {
+            bubbleObject.SetActive(true);
+            base.SetupBubble(bubbleObject, color);
         }
     }
 
@@ -29,7 +41,9 @@ namespace BubblesShoot.View.Factories
         public override void SetupBubble(GameObject bubbleObject, COLOR color)
         {
             base.SetupBubble(bubbleObject, color);
+
             bubbleObject.GetComponent<CircleCollider2D>().enabled = true;
+            bubbleObject.layer = LayerMask.NameToLayer("Bubbles&Walls");
         }
 
     }

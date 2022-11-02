@@ -22,14 +22,14 @@ namespace BubblesShoot.ModelControllers
 
         public void StartGame()
         {
-            Debug.Log("Start Game!");
+            //Debug.Log("Start Game!");
             _sceneView.StartGame();
             _sceneView.SpawnNewBubble(GetNewBubble(), this);
         }
 
         public void EndGame()
         {
-            Debug.Log("End Game!");           
+            //Debug.Log("End Game!");           
             _sceneView.EndGame();
         }
 

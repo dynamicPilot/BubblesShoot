@@ -1,6 +1,5 @@
 using BubblesShoot.Model;
 using BubblesShoot.Model.Bubbles;
-using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Grids;
 using BubblesShoot.Model.Interfaces;
 using BubblesShoot.ModelControllers;
@@ -77,9 +76,11 @@ namespace BubblesShoot.Root
 
             // bubble objects creator
             var scheme = new ColorScheme(_staticData);
+            var getAndAddFree = new FreeBubblesContainer(_sceneData.ExternalUpdater, new BubbleUpdaterMethod());
+
             var bubbleCreator = new BubbleCreator(_sceneData.LocalFactory,_sceneData.BubblePrefab, _sceneData.BubblesParent,
-                new BubbleSetup(scheme), new InitialBubbleSetup(scheme),
-                startPoint.y, _sceneData.MoveWithCameraParent);
+                new BubbleSetup(scheme), new FreeBubbleSetup(scheme) , new InitialBubbleSetup(scheme),
+                startPoint.y, _sceneData.MoveWithCameraParent, getAndAddFree);
 
             // view creator
             var viewCreator = new ViewCreator(bubbleCreator);
@@ -88,7 +89,7 @@ namespace BubblesShoot.Root
             var objects = viewCreator.CreateBubbles(grid, bubbles);
 
             var sceneUpdater = new SceneUpdater(cameraUpdater,
-                new ViewUpdater(objects), new UIUpdater(_sceneData.ScoreUI));
+                new ViewUpdater(objects, getAndAddFree), new UIUpdater(_sceneData.ScoreUI));
 
             var startEndControl = new SceneStartEndControl(_sceneData.Cover, _sceneData.PauseUIControl);
             var inputState = new InputStateControl(_sceneData.InputControl);

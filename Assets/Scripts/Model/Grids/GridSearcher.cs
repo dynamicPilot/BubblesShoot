@@ -1,10 +1,9 @@
 using BubblesShoot.Model.Common;
-using BubblesShoot.Model.Grids;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BubblesShoot
+namespace BubblesShoot.Model.Grids
 {
     public static class GridSearcher
     {
@@ -18,7 +17,6 @@ namespace BubblesShoot
             var column = indexes.Item2;
 
             if (bubbles[row][column].IsEmpty) return indexes;
-
 
             return FindNearestEmptyCell(row, column, grid, bubbles, hitPosition);
         }

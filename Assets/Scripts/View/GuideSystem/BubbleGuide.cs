@@ -25,6 +25,8 @@ namespace BubblesShoot.View.GuideSystem
             _rb = GetComponent<Rigidbody2D>();
             _informer = informer;
             _pauseUpdate = true;
+
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
             SetNextTarget();
         }
 
@@ -46,6 +48,7 @@ namespace BubblesShoot.View.GuideSystem
         private void OnDestroy()
         {
             GetComponent<CircleCollider2D>().enabled = true;
+            gameObject.layer = LayerMask.NameToLayer("Bubbles&Walls");
         }
 
         private void FixedUpdate()

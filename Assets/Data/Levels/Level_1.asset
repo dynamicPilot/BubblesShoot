@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a5fd94831c4e44f81a12bd89f6b111, type: 3}
   m_Name: Level_1
   m_EditorClassIdentifier: 
-  Number: 0
+  Number: 1
   SceneIndex: 1
   Rows: 7
   Columns: 9

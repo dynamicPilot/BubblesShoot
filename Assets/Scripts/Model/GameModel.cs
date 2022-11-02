@@ -33,7 +33,6 @@ namespace BubblesShoot.Model
             var result =_bubblesControl.RegisterNewBubble(indexes, bubble);
             
             _score += result.Item1;
-            Debug.Log("Score " + _score);
             _needUpdateObservers = result.Item2;
             if (_needUpdateObservers) _bubblesControl.AddRowToBubbles(_gridControl.AddRow());
             return indexes;            

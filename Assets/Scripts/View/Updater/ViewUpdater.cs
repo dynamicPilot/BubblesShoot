@@ -1,19 +1,20 @@
 using BubblesShoot.Model.Common;
-using Codice.Client.Common.GameUI;
+using BubblesShoot.View.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-//using Debug = UnityEngine.Debug;
 
 namespace BubblesShoot.View.Updaters
 {
     public class ViewUpdater
     {
+        private readonly IAddObjectToFree _addToFree;
         private List<List<GameObject>> _bubblesObjects;
 
-        public ViewUpdater(List<List<GameObject>> bubbles)
+        public ViewUpdater(List<List<GameObject>> bubbles, IAddObjectToFree addToFree)
         {
             _bubblesObjects = bubbles;
+            _addToFree = addToFree;
         }
 
         public void RegisterNewBubbleObject(GameObject bubbleObject, Tuple<int,int> indexes)
@@ -39,7 +40,12 @@ namespace BubblesShoot.View.Updaters
                     bool isActive = !bubbles[i][j].IsEmpty;
                     _bubblesObjects[i][j].SetActive(isActive);
 
-                    if (!isActive) _bubblesObjects[i][j] = null;
+                    if (!isActive)
+                    {                       
+                        GameObject temp = _bubblesObjects[i][j];
+                        _bubblesObjects[i][j] = null;
+                        _addToFree.AddObjectToFree(temp);
+                    }                   
                     else
                     {
                         if (_bubblesObjects[i][j].transform.position.y < bottomObjectY)
@@ -47,7 +53,7 @@ namespace BubblesShoot.View.Updaters
                     }
                 }
             }
-            Debug.Log($"Update View. Bottom position is {bottomObjectY}.");
+            //Debug.Log($"Update View. Bottom position is {bottomObjectY}.");
             return bottomObjectY;
         }
 
@@ -60,7 +66,7 @@ namespace BubblesShoot.View.Updaters
                 rowList.Add(null);
 
             _bubblesObjects.Add(rowList);
-            Debug.Log("Add row to Objects" + _bubblesObjects.Count);
+            //Debug.Log("Add row to Objects" + _bubblesObjects.Count);
         }
     }
 }

@@ -44,8 +44,8 @@ namespace BubblesShoot.View.Updaters
         {
             float currentPosition = _transform[0].position.y;
             float newYPos = bottom;
-            Debug.Log($"Bottom position {bottom}. Up position {up}.");
-            Debug.Log($"Camera up position {newYPos + _height / 2}.");
+            //Debug.Log($"Bottom position {bottom}. Up position {up}.");
+            //Debug.Log($"Camera up position {newYPos + _height / 2}.");
             if (newYPos + _height / 2 > up) newYPos = up - _height / 2;
 
             return newYPos;

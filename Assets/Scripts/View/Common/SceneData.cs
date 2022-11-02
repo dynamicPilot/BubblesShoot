@@ -3,6 +3,7 @@ using BubblesShoot.View.Input;
 using BubblesShoot.View.PathSystem;
 using BubblesShoot.View.StateControls;
 using BubblesShoot.View.UI;
+using BubblesShoot.View.Updaters;
 using UnityEngine;
 
 namespace BubblesShoot.View.Common
@@ -39,5 +40,6 @@ namespace BubblesShoot.View.Common
         public PathContainer PathContainer;
         public InputControl InputControl;
         public StaticData StaticData;
+        public ObjectExternalUpdater ExternalUpdater;
     }
 }

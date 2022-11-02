@@ -834,6 +834,7 @@ GameObject:
   - component: {fileID: 1935045914}
   - component: {fileID: 1935045916}
   - component: {fileID: 1935045915}
+  - component: {fileID: 1935045917}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: SceneData
@@ -870,6 +871,7 @@ MonoBehaviour:
   PathContainer: {fileID: 1935045913}
   InputControl: {fileID: 1935045914}
   StaticData: {fileID: 11400000, guid: 35dce174634c0904aa99327f0c523d44, type: 2}
+  ExternalUpdater: {fileID: 1935045917}
 --- !u!4 &1935045911
 Transform:
   m_ObjectHideFlags: 0
@@ -932,6 +934,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3dab70c16895867478978bf490ad397a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1935045917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935045909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7920c979cec662c45bd37a1e987951fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1975248986
@@ -1039,6 +1053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2949a233f4f7d204da80313ad8b4befc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _container: {fileID: 0}
   _sceneData: {fileID: 1935045910}
 --- !u!4 &2124377408
 Transform:

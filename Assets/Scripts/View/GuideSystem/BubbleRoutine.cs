@@ -1,8 +1,10 @@
 using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Interfaces;
 using BubblesShoot.View.Creators;
+using BubblesShoot.View.Interfaces;
 using BubblesShoot.View.PathSystem;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BubblesShoot.View.GuideSystem

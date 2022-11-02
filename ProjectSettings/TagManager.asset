@@ -9,6 +9,7 @@ TagManager:
   - StartPlace
   - SceneData
   - DataContainer
+  - NewBubble
   layers:
   - Default
   - TransparentFX
@@ -16,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Bubbles
+  - Bubbles&Walls
   - Walls
-  - 
+  - TranspBubbles
   - 
   - 
   - 
