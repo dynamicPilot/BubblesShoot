@@ -8,12 +8,12 @@ using BubblesShoot.Root.Interfaces;
 using BubblesShoot.View;
 using BubblesShoot.View.Common;
 using BubblesShoot.View.Creators;
+using BubblesShoot.View.DataControls;
 using BubblesShoot.View.Factories;
 using BubblesShoot.View.GuideSystem;
 using BubblesShoot.View.Interfaces;
 using BubblesShoot.View.StateControls;
 using BubblesShoot.View.Updaters;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BubblesShoot.Root
@@ -23,11 +23,13 @@ namespace BubblesShoot.Root
         private readonly SceneData _sceneData;
         private readonly StaticData _staticData;
         private IStartGame _iStartGame;
-        public Composer(SceneData sceneData)
+        private LevelData _levelData;
+        public Composer(SceneData sceneData, LevelData levelData)
         {
             _sceneData = sceneData;
             _staticData = _sceneData.StaticData;
             _iStartGame = null;
+            _levelData = levelData;
         }
 
         public IStartGame GetIStartGame()
@@ -43,17 +45,33 @@ namespace BubblesShoot.Root
         public void MakeSystems()
         {
             _iStartGame = null;
+
+            // check level data
+            if (!CheckLevelData(_levelData))
+            {
+                _iStartGame = new SceneLevelDataError(new SceneLoader(_staticData.MenuIndex));
+                return;
+            }
+            
             int emptyRow = _staticData.EmptyRows;
 
-            CoordinateGrid grid = GridConstructor.GetGrid(5, 10, _sceneData.BubbleSize, emptyRow);
-            List<List<BubbleCell>> bubbles = BubblesConstructor.GetRandomBubbles(grid, emptyRow);
+            CoordinateGrid grid = GridConstructor.GetGrid(_levelData.Rows, _levelData.Columns, _sceneData.BubbleSize, emptyRow);
 
+            // get bubbles
+            //List<List<BubbleCell>> bubbles = BubblesConstructor.GetRandomBubbles(grid, emptyRow);
+            var bubbles = BubblesConstructor.GetBubbles(grid, emptyRow, _levelData.IsRandomInitials, _levelData.BubblesColors);
+            
+            // check for floaters and update
+            BubblesGraphUpdater.SearchForFloaters(bubbles);
+            BubblesGraphUpdater.UpdateBubbleGraph(bubbles);
+
+            IGenerateNewBubble generator = _levelData.IsRandomNew ? new RandomBubbleGenerator() : 
+                new SpecificBubbleGenerator(_levelData.GeneratingBubbles);
             // game model
-            GameModel model = new GameModel(new BubblesControl(bubbles), new GridControl(grid));
+            GameModel model = new GameModel(new BubblesControl(bubbles, generator), new GridControl(grid));
 
             // camera
-            var cameraUpdater = new CameraUpdater(
-                new Transform[2] { Camera.main.transform, _sceneData.MoveWithCameraParent });
+            var cameraUpdater = new CameraUpdater(new Transform[2] { Camera.main.transform, _sceneData.MoveWithCameraParent });
             var cameraSize = cameraUpdater.SetCameraAndGetSize(grid, Camera.main);
             Vector2 startPoint = new Vector2(0, - cameraSize.y / 2 + _sceneData.StartPositionDeltaFromScreenBottom);
 
@@ -95,6 +113,11 @@ namespace BubblesShoot.Root
             model.RegisterObserver(sceneView);
 
             _iStartGame = controller;
+        }
+
+        private bool CheckLevelData(LevelData data)
+        {
+            return LevelDataChecker.CheckLevelData(data);
         }
 
         private IObjectCreator[] GetCreators(Vector2 startPoint, Vector2 cameraSize, ISearchGrid searchGrid)

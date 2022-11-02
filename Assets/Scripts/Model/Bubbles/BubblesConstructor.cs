@@ -9,6 +9,78 @@ namespace BubblesShoot.Model.Bubbles
 {
     public static class BubblesConstructor
     {
+        public static List<List<BubbleCell>> GetBubbles(CoordinateGrid grid, int emptyRows, bool isRandom, BubblesColorRow[] colorRows)
+        {
+            var bubbles = new List<List<BubbleCell>>();
+            var rows = grid.Rows - emptyRows;
+            var columns = grid.Columns;
+
+            int i = 0, index = 0;
+
+            while (i < rows)
+            {
+                if (isRandom)
+                {
+                    bubbles.Add(GetRow(i++, columns, grid, GenerateColorRow(columns)));
+                }
+                else
+                {
+                    bubbles.Add(GetRow(i++, columns, grid, colorRows[index++].Colors));
+                    index %= colorRows.Length;
+                }   
+            }
+
+            for (i = 0; i < emptyRows; i++)
+            {
+                bubbles.Add(GetEmptyRow(rows + i, columns, grid));
+            }
+
+            return bubbles;
+        }
+
+        private static COLOR[] GenerateColorRow(int columns)
+        {
+            var rowList = new List<COLOR>();
+            bool hasAtLeastOneBubble = false;
+
+            while(!hasAtLeastOneBubble)
+            {
+                rowList.Clear();
+
+                for (int j = 0; j < columns; j++)
+                {
+                    int colorIndex = Random.Range(0, (int)COLOR.none + 2);
+                    if (colorIndex > (int)COLOR.none) colorIndex = (int)COLOR.none;
+                    rowList.Add((COLOR)colorIndex);
+                    hasAtLeastOneBubble = (colorIndex < (int)COLOR.none);
+                }
+            }
+
+            return rowList.ToArray();
+        }
+
+        private static List<BubbleCell> GetRow(int row, int columns, CoordinateGrid grid, COLOR[] colors = null)
+        {
+            var rowList = new List<BubbleCell>();
+            bool isEmpty = colors == null || colors.Length == 0;
+            int j = 0, index = 0;
+
+            while (j < columns)
+            {
+                Bubble newBubble = null;
+                if (!isEmpty)
+                {
+                    newBubble = (colors[index] != COLOR.none) ? new Bubble(colors[index]) : null;
+                    index++;
+                    index %= colors.Length;
+                }
+
+                rowList.Add(new BubbleCell(newBubble, grid.GetNearestCells(row, j++)));                
+            }
+
+            return rowList;
+        }
+
         public static List<List<BubbleCell>> GetRandomBubbles(CoordinateGrid grid, int emptyRows = 1)
         {
             var bubbles = new List<List<BubbleCell>>();
@@ -48,18 +120,18 @@ namespace BubblesShoot.Model.Bubbles
 
         private static List<BubbleCell> GetEmptyRow(int row, int columns, CoordinateGrid grid)
         {
-            var rowList = new List<BubbleCell>();
-            for (int j = 0; j < columns; j++)
-            {
-                rowList.Add(new BubbleCell(null, grid.GetNearestCells(row, j)));
-            }
+            //var rowList = new List<BubbleCell>();
+            //for (int j = 0; j < columns; j++)
+            //{
+            //    rowList.Add(new BubbleCell(null, grid.GetNearestCells(row, j)));
+            //}
 
-            return rowList;
+            return GetRow(row, columns, grid, null);
         }
 
         public static void AddRowToBubble(CoordinateGrid grid, List<List<BubbleCell>> bubbles)
         {
-            bubbles.Add(GetEmptyRow(bubbles.Count, bubbles[0].Count, grid));
+            bubbles.Add(GetRow(bubbles.Count, bubbles[0].Count, grid, null));
 
             int rowToUpdate = bubbles.Count - 2;
             for (int j = 0; j < bubbles[0].Count; j++)

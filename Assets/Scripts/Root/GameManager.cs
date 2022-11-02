@@ -17,7 +17,7 @@ namespace BubblesShoot.Root.Managers
 
         public override IEnumerator GettingReady()
         {
-            var composer = new Composer(_sceneData);
+            var composer = new Composer(_sceneData, _container.Data);
             composer.MakeSystems();
             yield return null;
 

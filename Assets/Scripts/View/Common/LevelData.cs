@@ -16,7 +16,7 @@ namespace BubblesShoot.View.Common
 
         [Header("Initial Bubbles")]
         public bool IsRandomInitials;
-        public List<BubblesColorRow> BubblesColors;
+        public BubblesColorRow[] BubblesColors;
 
         [Header("New Bubbles")]
         public bool IsRandomNew;

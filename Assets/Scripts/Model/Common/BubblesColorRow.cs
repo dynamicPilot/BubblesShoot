@@ -8,6 +8,6 @@ namespace BubblesShoot
     [System.Serializable]
     public class BubblesColorRow
     {
-        public List<COLOR> Colors;
+        public COLOR[] Colors;
     }
 }

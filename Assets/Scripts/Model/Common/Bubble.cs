@@ -1,6 +1,6 @@
 namespace BubblesShoot.Model.Common
 {
-    public enum COLOR { red, blue, yellow, green }
+    public enum COLOR { red, blue, yellow, green, none }
 
     public class Bubble
     {

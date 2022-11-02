@@ -1,10 +1,10 @@
 using BubblesShoot.Model.Bubbles;
 using BubblesShoot.Model.Common;
 using BubblesShoot.Model.Grids;
+using BubblesShoot.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using Random = UnityEngine.Random;
 
 namespace BubblesShoot.Model
@@ -12,17 +12,20 @@ namespace BubblesShoot.Model
     public class BubblesControl
     {
         public List<List<BubbleCell>> Bubbles { get; private set; }
+        private readonly IGenerateNewBubble _bubbleGenerator;
         private bool _needUpdateBubbleList = false;
-        public BubblesControl(List<List<BubbleCell>> bubbles)
+        public BubblesControl(List<List<BubbleCell>> bubbles, IGenerateNewBubble bubbleGenerator)
         {
             Bubbles = bubbles;
+            _bubbleGenerator = bubbleGenerator;
             _needUpdateBubbleList = false;
         }
 
         public Bubble GetNewBubble()
         {
-            int colorIndex = Random.Range(0, 4);
-            return new Bubble((COLOR)colorIndex);
+            return _bubbleGenerator.GenerateNewBubble();
+            //int colorIndex = Random.Range(0, 4);
+            //return new Bubble((COLOR)colorIndex);
         }
 
         public Tuple<int, bool> RegisterNewBubble(Tuple<int,int> indexes, Bubble bubble)
